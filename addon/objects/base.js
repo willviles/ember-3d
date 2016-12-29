@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { assert, computed: { reads }, get, getProperties } = Ember;
+const { assert, computed: { reads }, getProperties, typeOf } = Ember;
 
 export default Ember.Object.extend({
   identifier: 'object',
@@ -17,20 +17,10 @@ export default Ember.Object.extend({
 
     scene.add(object);
 
-    this.animate();
-
-  },
-
-  animate() {
-    let cube = get(this, 'object');
-
-    function loop() {
-      requestAnimationFrame(loop);
-      cube.rotation.x += 0.01;
-      cube.rotation.y += 0.01;
+    if (typeOf(this.animate) === 'function') {
+      this.animate();
     }
 
-    loop();
   }
 
 });
