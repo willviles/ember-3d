@@ -1,8 +1,31 @@
 # Ember 3D
 
-Ember 3D is an Ember addon for using [Three.js](https://github.com/mrdoob/three.js) - an easy to use, lightweight, javascript 3D library. It is designed to add structure to creating Three.js projects and offers a library of helpers to quickly add scenes, renderers, cameras, lighting and objects.
+Ember 3D is an Ember addon for using [Three.js](https://github.com/mrdoob/three.js) - an easy to use, lightweight, javascript 3D library.
 
-## Folder structure
+It is designed to add a solid structure Three.js code and offers a library of mixins to enable fast creation of scenes, renderers, cameras, lighting and objects.
+
+## Installation
+
+`ember install ember-3d`
+
+## Using Three.js
+
+Ember 3D includes a shim for the Three.js library. Installing Ember 3D will allow you to use imports from the `three` module, like so:
+
+```javascript
+import { Scene, WebGLRenderer } from 'three';
+```
+
+### Requirements
+
+The shim uses `app.import`'s new [AMD transformation](https://github.com/ember-cli/ember-cli/pull/5976) feature, released in Ember CLI [2.9.0](https://github.com/ember-cli/ember-cli/blob/master/CHANGELOG.md#290).
+
+Therefore, **you must be running Ember CLI >=2.9.0**.
+
+
+## Usage
+
+### Folder structure
 
 Ember 3D adds a folder named `3d` to your project's `app` folder. Ember 3D expects projects to be structured in the following manner:
 
@@ -18,7 +41,7 @@ app/
 |       └── scene.js
 ```
 
-## Template
+### Templates
 
 To add a 3D scene to a template, use the `3d-scene` component with a camelized version of the scene id:
 
@@ -26,7 +49,7 @@ To add a 3D scene to a template, use the `3d-scene` component with a camelized v
 {{3d-scene id="sceneId"}}
 ```
 
-## Scenes
+### Scenes
 
 Ember 3D offers a [BaseSceneMixin](https://github.com/willviles/ember-3d/blob/master/addon/scenes/base.js) which, under the hood, takes the renderer defined in `renderer.js` and camera defined in `camera.js`, creaters a Three.js scene and appends it to the DOM.
 
@@ -36,7 +59,7 @@ import SceneMixin from 'ember-3d/scenes/base';
 export default SceneMixin.create();
 ```
 
-## Renderers
+### Renderers
 
 Ember 3D's [WebGLRendererMixin](https://github.com/willviles/ember-3d/blob/master/addon/renderers/webgl.js) extends the [BaseRendererMixin](https://github.com/willviles/ember-3d/blob/master/addon/renderers/base.js), which automatically resizes the renderer on dimension changes of the `3d-scene`.
 
@@ -46,11 +69,11 @@ import WebGLRendererMixin from 'ember-3d/renderers/webgl';
 export default WebGLRendererMixin.create();
 ```
 
-## Cameras
+### Cameras
 
 Ember 3D allows for the creation of two types of Three.js camera, `perspectiveCamera` and `orthographicCamera`.
 
-### Perspective Camera
+#### Perspective Camera
 
 The [PerspectiveCameraMixin](https://github.com/willviles/ember-3d/blob/master/addon/cameras/perspective.js) creates a Three.js `PerspectiveCamera`. The camera's `aspect` value is dynamically updated when the `3d-scene` dimensions change.
 
@@ -70,7 +93,7 @@ export default PerspectiveCameraMixin.create({
 });
 ```
 
-### Orthographic Camera
+#### Orthographic Camera
 
 The [OrthographicCameraMixin](https://github.com/willviles/ember-3d/blob/master/addon/cameras/orthographic.js) creates a Three.js `OrthographicCamera`. Left, right, top and bottom frustrums are dynamically updated when the `3d-scene` dimensions change.
 
@@ -89,7 +112,7 @@ export default OrthographicCameraMixin.create({
 });
 ```
 
-## Lighting
+### Lighting
 
 The [BaseLightingMixin](https://github.com/willviles/ember-3d/blob/master/addon/lighting/base.js) offers a simple method of registering lighting onto the Three.js scene using the `addLighting` function.
 
@@ -106,11 +129,11 @@ export default BaseLightingMixin.create({
 });
 ```
 
-## Objects
+### Objects
 
 The [BaseObjectMixin](https://github.com/willviles/ember-3d/blob/master/addon/objects/base.js) sets out a set of functions for registering 3D objects onto your Three.js scene. It also exposes an `animate` function for animating your objects. The `BaseObjectMixin` can't be used to create objects itself, but you can use one of the following mixins extended from it:
 
-### Mesh
+#### Mesh
 
 For example, the [MeshObjectMixin](https://github.com/willviles/ember-3d/blob/master/addon/objects/mesh.js) can easily create a cube, attach it to your scene and animate it:
 
