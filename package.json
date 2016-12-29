@@ -1,9 +1,15 @@
 {
   "name": "ember-3d",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.0.1",
+  "description": "Fast & organized 3D WebGL scene creation in Ember CLI using Three.js.",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "ember-cli",
+    "three",
+    "three.js",
+    "3d",
+    "animation",
+    "webgl"
   ],
   "license": "MIT",
   "author": "",
@@ -18,7 +24,8 @@
     "test": "ember try:each"
   },
   "dependencies": {
-    "ember-cli-babel": "^5.1.7"
+    "ember-cli-babel": "^5.1.7",
+    "three": "0.83.0"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
