@@ -39,6 +39,9 @@ export default Ember.Component.extend({
       objects
     } = get(this, 'config');
 
+    // Set initial component size
+    this.setupStretch();
+
     // Set component dimensions
     this.setDimensions();
 
@@ -115,6 +118,28 @@ export default Ember.Component.extend({
 
     setProperties(this, {
       width, height,
+    });
+
+  },
+
+  // @property stretch
+  //
+  // Boolean which determines whether the component should stretch to its parent container size.
+
+  stretch: true,
+
+  // @function setupResize
+  //
+  // Recalculates dimensions when window is resized.
+
+  setupStretch() {
+
+    if (get(this, 'stretch') !== true) { return; }
+
+    this.$().css({
+      position: 'absolute',
+      top: '0', left: '0',
+      width: '100%', height: '100%'
     });
 
   },
