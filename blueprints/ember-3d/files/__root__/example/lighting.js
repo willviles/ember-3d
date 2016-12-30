@@ -1,6 +1,6 @@
 import LightingMixin from 'ember-3d/lighting/base';
 
-export default LightingMixin.create({
+export default LightingMixin.extend({
 
   addLighting() {
     // Add lighting using:

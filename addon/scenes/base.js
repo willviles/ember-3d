@@ -3,7 +3,7 @@ import { Scene } from 'three';
 
 const { computed: { reads }, get, getProperties, set } = Ember;
 
-export default Ember.Object.extend({
+export default Ember.Object.extend(Ember.Evented, {
   identifier: 'scene',
 
   renderer: reads('container._renderer'),
@@ -16,6 +16,7 @@ export default Ember.Object.extend({
   setScene() {
     let scene = new Scene();
     set(this, 'scene', scene);
+    this.trigger('didSetScene');
   },
 
   // @function appendScene

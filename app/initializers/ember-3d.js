@@ -39,6 +39,10 @@ export function initialize(application) {
 
       let module = require(moduleObj.path).default;
 
+      if (typeOf(module) === 'class') {
+        module = module.create();
+      }
+
       if (!isPresent(module) ||
           typeOf(module) !== 'instance' ||
           get(module, 'identifier') !== moduleObj.type) {

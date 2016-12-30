@@ -4,7 +4,7 @@ import { BoxGeometry, MeshBasicMaterial } from 'three';
 
 const { get } = Ember;
 
-export default MeshObjectMixin.create({
+export default MeshObjectMixin.extend({
 
   geometry: new BoxGeometry(700, 700, 700, 10, 10, 10),
   material: new MeshBasicMaterial({color: 0xfffff, wireframe: true}),

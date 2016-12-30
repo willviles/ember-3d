@@ -57,7 +57,7 @@ The [BaseSceneMixin](https://github.com/willviles/ember-3d/blob/master/addon/sce
 ```javascript
 import SceneMixin from 'ember-3d/scenes/base';
 
-export default SceneMixin.create();
+export default SceneMixin.extend();
 ```
 
 ### Renderers
@@ -67,7 +67,7 @@ Ember 3D's [WebGLRendererMixin](https://github.com/willviles/ember-3d/blob/maste
 ```javascript
 import WebGLRendererMixin from 'ember-3d/renderers/webgl';
 
-export default WebGLRendererMixin.create();
+export default WebGLRendererMixin.extend();
 ```
 
 ### Cameras
@@ -81,7 +81,7 @@ The [PerspectiveCameraMixin](https://github.com/willviles/ember-3d/blob/master/a
 ```javascript
 import PerspectiveCameraMixin from 'ember-3d/cameras/perspective';
 
-export default PerspectiveCameraMixin.create({
+export default PerspectiveCameraMixin.extend({
   viewAngle: 75,
   near: 1,
   far: 10000,
@@ -101,7 +101,7 @@ The [OrthographicCameraMixin](https://github.com/willviles/ember-3d/blob/master/
 ```javascript
 import OrthographicCameraMixin from 'ember-3d/cameras/orthographic';
 
-export default OrthographicCameraMixin.create({
+export default OrthographicCameraMixin.extend({
   near: 1,
   far: 10000,
 
@@ -120,7 +120,7 @@ The [BaseLightingMixin](https://github.com/willviles/ember-3d/blob/master/addon/
 ```javascript
 import BaseLightingMixin from 'ember-3d/lighting/base';
 
-export default BaseLightingMixin.create({
+export default BaseLightingMixin.extend({
 
   addLighting() {
     // Add lighting using:
@@ -145,7 +145,7 @@ import { BoxGeometry, MeshBasicMaterial } from 'three';
 
 const { get } = Ember;
 
-export default MeshObjectMixin.create({
+export default MeshObjectMixin.extend({
 
   geometry: new BoxGeometry(700, 700, 700, 10, 10, 10),
   material: new MeshBasicMaterial({color: 0xfffff, wireframe: true}),
