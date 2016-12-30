@@ -20,9 +20,9 @@ export default Ember.Component.extend({
   //
   // Reads properties from config objects.
 
-  _scene: reads('config.scene.scene'),
-  _renderer: reads('config.renderer.renderer'),
-  _camera: reads('config.camera.camera'),
+  _scene: reads('config.scene.instance.scene'),
+  _renderer: reads('config.renderer.instance.renderer'),
+  _camera: reads('config.camera.instance.camera'),
 
   // @function didInsertElement
   //
@@ -32,12 +32,7 @@ export default Ember.Component.extend({
     this._super(...arguments);
 
     const element = get(this, 'element');
-    const {
-      scene,
-      renderer,
-      camera,
-      objects
-    } = get(this, 'config');
+    const { scene, renderer, camera } = get(this, 'config');
 
     // Set initial component size
     this.setupStretch();
@@ -46,28 +41,27 @@ export default Ember.Component.extend({
     this.setDimensions();
 
     // Set the scene
-    scene.setScene();
+    scene.instance.setScene();
 
     // Set the renderer
-    renderer.setRenderer();
+    renderer.instance.setRenderer();
 
     // Set the camera
-    camera.setCamera();
+    camera.instance.setCamera();
 
     // Append the scene
-    scene.appendScene(element);
+    scene.instance.appendScene(element);
 
-    objects.forEach((object) => {
-      setProperties(object, {
-        container: this
+    get(this, 'config.objects').forEach((object) => {
+      get(object, 'export').create({
+        container: this,
+        sceneId: object.scene
       });
-
-      object.createObject();
 
     });
 
     // Render the scene
-    scene.renderScene();
+    scene.instance.renderScene();
 
   },
 
@@ -75,7 +69,7 @@ export default Ember.Component.extend({
   //
   // Gets the Three.js config based upon the ID and sets it as a property.
 
-  config: on('init', computed(function() {
+  config: computed(function () {
     let id = get(this, 'id');
 
     assert(`Must set Three.js scene id in component '3d-scene'`, id);
@@ -84,25 +78,29 @@ export default Ember.Component.extend({
 
     let factory = Ember.getOwner(this)._lookupFactory(`3d:${id}`);
 
-    this.setContainerOnFactoryObjects(factory);
+    this.instantiateFactoryObjects(factory);
 
     return factory;
 
-  })),
+  }),
 
-  // @function setContainerOnFactoryObjects
+
+  // @function instantiateFactoryObjects
   //
   // Adds the component to each factory object as 'container'.
 
-  setContainerOnFactoryObjects(factory) {
+  instantiateFactoryObjects(factory) {
+
     Object.keys(factory).forEach((key) => {
-      if (isEqual(key, 'objects')) {
-        get(factory, 'objects').forEach((object) => {
-          set(object, 'container', this);
+
+      if (!isEqual(key, 'objects')) {
+        let factoryRegistration = get(factory, key);
+        let instance = factoryRegistration.export.create({
+          container: this,
+          sceneId: factoryRegistration.scene
         });
 
-      } else {
-        set(factory, `${key}.container`, this);
+        set(factory, `${key}.instance`, instance);
 
       }
 

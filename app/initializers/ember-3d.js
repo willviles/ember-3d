@@ -2,11 +2,11 @@
 import Ember from 'ember';
 import ENV from '../config/environment';
 
-const { assign, get, isArray, isPresent, set, typeOf } = Ember;
+const { assign, get, isArray, set } = Ember;
 
 export function initialize(application) {
 
-  const sceneModules = Ember.A([]);
+  const factoryRegistrations = Ember.A([]);
 
   Object.keys(requirejs.entries).filter((key) => {
     return new RegExp(`^${ENV.modulePrefix}/3d/(.*)`).test(key);
@@ -14,52 +14,45 @@ export function initialize(application) {
   }).forEach((modulePath) => {
 
     const moduleParts = modulePath.split('/');
-    const sceneName = Ember.String.camelize(moduleParts[2]);
+    const sceneName = Ember.String.dasherize(moduleParts[2]);
     const topLevelItem = moduleParts[3];
 
-    let sceneModule = { path: modulePath, scene: sceneName };
+    let factoryRegistration = { path: modulePath, scene: sceneName };
 
     if (['camera', 'lighting', 'renderer', 'scene'].includes(topLevelItem)) {
-      sceneModules.pushObject(assign(sceneModule, { type: topLevelItem }));
+      factoryRegistrations.pushObject(
+        assign(factoryRegistration, { type: topLevelItem })
+      );
 
     }
 
     if (['objects'].includes(topLevelItem)) {
-      sceneModules.pushObject(assign(sceneModule, { type: 'object' }));
+      factoryRegistrations.pushObject(
+        assign(factoryRegistration, { type: 'object', id: moduleParts[moduleParts.length - 1] })
+      );
 
     }
 
   });
 
-  sceneModules.mapBy('scene').uniq().forEach((scene) => {
+  factoryRegistrations.mapBy('scene').uniq().forEach((scene) => {
 
     let injection = Ember.Object.create({});
 
-    sceneModules.filterBy('scene', scene).forEach((moduleObj) => {
+    factoryRegistrations.filterBy('scene', scene).forEach((factoryRegistration) => {
 
-      let module = require(moduleObj.path).default;
+      factoryRegistration.export = require(factoryRegistration.path).default;
 
-      if (typeOf(module) === 'class') {
-        module = module.create();
-      }
-
-      if (!isPresent(module) ||
-          typeOf(module) !== 'instance' ||
-          get(module, 'identifier') !== moduleObj.type) {
-
-        throw new Error(`${ENV.modulePrefix}/app/3d/${moduleObj.type} must export a ${moduleObj.type} object instance`);
-
-      }
-
-      if (moduleObj.type === 'object') {
+      if (factoryRegistration.type === 'object') {
         if (!isArray(get(injection, 'objects'))) {
           set(injection, 'objects', Ember.A([]));
         }
 
-        get(injection, 'objects').pushObject(module);
+        get(injection, 'objects').pushObject(factoryRegistration);
 
       } else {
-        set(injection, moduleObj.type, module);
+
+        set(injection, factoryRegistration.type, factoryRegistration);
 
       }
     });

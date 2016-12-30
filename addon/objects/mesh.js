@@ -5,15 +5,14 @@ import { Mesh } from 'three';
 const { assert, getProperties, set } = Ember;
 
 export default BaseObjectMixin.extend({
-  createObject() {
+
+  setObject() {
     const { geometry, material } = getProperties(this, 'geometry', 'material');
 
     assert('Must add a valid geometry property to object.', geometry);
     assert('Must add a valid material property to object.', material);
 
     set(this, 'object', new Mesh(geometry, material));
-
-    this.addToScene();
 
   }
 
