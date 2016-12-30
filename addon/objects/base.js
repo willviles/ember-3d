@@ -30,6 +30,10 @@ export default Ember.Object.extend(Evented, {
       this.didCreateObject();
     }
 
+    if (typeOf(this.animate) === 'function') {
+      this.animate();
+    }
+
     this.trigger('didCreateObject');
 
   },
@@ -38,10 +42,6 @@ export default Ember.Object.extend(Evented, {
     const { scene, object } = getProperties(this, 'scene', 'object');
 
     scene.add(object);
-
-    if (typeOf(this.animate) === 'function') {
-      this.animate();
-    }
 
   },
 
