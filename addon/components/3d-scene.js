@@ -52,6 +52,16 @@ export default Ember.Component.extend({
     // Append the scene
     scene.instance.appendScene(element);
 
+    // Instantiate Interactions
+    get(this, 'config.interactions').forEach((object) => {
+      get(object, 'export').create({
+        container: this,
+        sceneId: object.scene
+      });
+
+    });
+
+    // Instantiate Objects
     get(this, 'config.objects').forEach((object) => {
       get(object, 'export').create({
         container: this,
@@ -93,7 +103,7 @@ export default Ember.Component.extend({
 
     Object.keys(factory).forEach((key) => {
 
-      if (!isEqual(key, 'objects')) {
+      if (!['interactions', 'objects'].includes(key)) {
         let factoryRegistration = get(factory, key);
         let instance = factoryRegistration.export.create({
           container: this,

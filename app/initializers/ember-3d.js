@@ -7,6 +7,7 @@ const { assign, get, isArray, set } = Ember;
 export function initialize(application) {
 
   const factoryRegistrations = Ember.A([]);
+  let inflector = new Ember.Inflector(Ember.Inflector.defaultRules);
 
   Object.keys(requirejs.entries).filter((key) => {
     return new RegExp(`^${ENV.modulePrefix}/3d/(.*)`).test(key);
@@ -26,9 +27,9 @@ export function initialize(application) {
 
     }
 
-    if (['objects'].includes(topLevelItem)) {
+    if (['interactions', 'objects'].includes(topLevelItem)) {
       factoryRegistrations.pushObject(
-        assign(factoryRegistration, { type: 'object', id: moduleParts[moduleParts.length - 1] })
+        assign(factoryRegistration, { type: inflector.singularize(topLevelItem), id: moduleParts[moduleParts.length - 1] })
       );
 
     }
@@ -43,12 +44,14 @@ export function initialize(application) {
 
       factoryRegistration.export = require(factoryRegistration.path).default;
 
-      if (factoryRegistration.type === 'object') {
-        if (!isArray(get(injection, 'objects'))) {
-          set(injection, 'objects', Ember.A([]));
+      let pluralType = inflector.pluralize(factoryRegistration.type);
+
+      if (['interactions', 'objects'].includes(pluralType)) {
+        if (!isArray(get(injection, pluralType))) {
+          set(injection, pluralType, Ember.A([]));
         }
 
-        get(injection, 'objects').pushObject(factoryRegistration);
+        get(injection, pluralType).pushObject(factoryRegistration);
 
       } else {
 
