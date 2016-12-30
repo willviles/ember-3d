@@ -31,6 +31,8 @@ app/
 ├── 3d/
 |   └── scene-id/
 |       ├── camera.js
+|       ├── interactions/
+|           └── interaction-id.js
 |       ├── lighting.js
 |       ├── objects/
 |           └── object-id.js
@@ -67,10 +69,8 @@ import WebGLRendererMixin from 'ember-3d/renderers/webgl';
 
 export default WebGLRendererMixin.extend({
   options: {
-		alpha: true,
-    shadowMap: {
-      enabled: true
-    }
+    alpha: true,
+    shadowMap: { enabled: true }
   }
 });
 ```
