@@ -21,6 +21,13 @@ export default BaseObjectMixin.extend({
 
     set(this, 'object', get(this, 'group'));
 
+  },
+
+  addToGroup(objects) {
+    objects.forEach((object) => {
+      get(this, 'group').add(object);
+    });
+
   }
 
 });
