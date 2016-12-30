@@ -2,7 +2,9 @@
 
 Ember 3D is an Ember addon for using [Three.js](https://github.com/mrdoob/three.js) - an easy to use, lightweight, javascript 3D library.
 
-It is designed to add a solid structure Three.js code and offers a library of mixins to enable fast creation of scenes, renderers, cameras, lighting and objects.
+It is designed to:
+* Prescribe a solid file structure to Three.js code using ES6 modules.
+* Enable fast creation of Three.js [scenes](#scenes), [renderers](#renderers), [cameras](#cameras), [lighting](#lighting) and [objects](#objects).
 
 ## Installation
 
@@ -18,10 +20,9 @@ import { Scene, WebGLRenderer } from 'three';
 
 ### Requirements
 
-The shim uses `app.import`'s new [AMD transformation](https://github.com/ember-cli/ember-cli/pull/5976) feature, released in Ember CLI [2.9.0](https://github.com/ember-cli/ember-cli/blob/master/CHANGELOG.md#290).
+**Ember CLI >=2.9.0**
 
-Therefore, **you must be running Ember CLI >=2.9.0**.
-
+The shim uses `app.import`'s new [AMD transformation](https://github.com/ember-cli/ember-cli/pull/5976) feature released in Ember CLI [2.9.0](https://github.com/ember-cli/ember-cli/blob/master/CHANGELOG.md#290).
 
 ## Usage
 
@@ -41,7 +42,7 @@ app/
 |       └── scene.js
 ```
 
-### Templates
+### Components
 
 To add a 3D scene to a template, use the `3d-scene` component with a camelized version of the scene id:
 
@@ -51,7 +52,7 @@ To add a 3D scene to a template, use the `3d-scene` component with a camelized v
 
 ### Scenes
 
-Ember 3D offers a [BaseSceneMixin](https://github.com/willviles/ember-3d/blob/master/addon/scenes/base.js) which, under the hood, takes the renderer defined in `renderer.js` and camera defined in `camera.js`, creaters a Three.js scene and appends it to the DOM.
+The [BaseSceneMixin](https://github.com/willviles/ember-3d/blob/master/addon/scenes/base.js) simply creates a Three.js scene from the renderer defined in `renderer.js` & camera defined in `camera.js` and appends it to the DOM.
 
 ```javascript
 import SceneMixin from 'ember-3d/scenes/base';
@@ -131,11 +132,11 @@ export default BaseLightingMixin.create({
 
 ### Objects
 
-The [BaseObjectMixin](https://github.com/willviles/ember-3d/blob/master/addon/objects/base.js) sets out a set of functions for registering 3D objects onto your Three.js scene. It also exposes an `animate` function for animating your objects. The `BaseObjectMixin` can't be used to create objects itself, but you can use one of the following mixins extended from it:
+The [BaseObjectMixin](https://github.com/willviles/ember-3d/blob/master/addon/objects/base.js) prescribes a set of functions for registering 3D objects on your Three.js scene. It also exposes an `animate` function for animating your objects. The `BaseObjectMixin` can't be used to create objects itself, but you can use one of the following mixins extended from it:
 
 #### Mesh
 
-For example, the [MeshObjectMixin](https://github.com/willviles/ember-3d/blob/master/addon/objects/mesh.js) can easily create a cube, attach it to your scene and animate it:
+Triangular polygon mesh based objects can be created and attached to the scene using the [MeshObjectMixin](https://github.com/willviles/ember-3d/blob/master/addon/objects/mesh.js). For example, the following code creates a cube and animates it:
 
 ```javascript
 import Ember from 'ember';
@@ -166,14 +167,17 @@ export default MeshObjectMixin.create({
 
 Out-of-the-box support for other Three.js object types will be added in the near future.
 
+## Using Three.js
+
+For more information on how to use Three.js, please refer to the [documentation](https://threejs.org/docs/).
+
 ## Contributing
 
-Ember 3D is in its infancy. It will seek to be a flexible and elegant addon for creating complex 3D scenes, though at the moment is lacking a lot of functionality. Please feel free to contribute.
+Ember 3D is in its infancy. It will seek to be a flexible and elegant addon for creating complex 3D scenes. Please feel free to contribute.
 
 ### Feature requests
 
 Create feature requests [here](https://github.com/willviles/ember-3d/issues/new) and please tag your issue with `feature-request`.
-
 
 <!-- ## Installation
 
