@@ -76,9 +76,11 @@ export default Ember.Component.extend({
   // Gets the Three.js config based upon the ID and sets it as a property.
 
   config: on('init', computed(function() {
-    const id = get(this, 'id');
+    let id = get(this, 'id');
 
     assert(`Must set Three.js scene id in component '3d-scene'`, id);
+
+    id = Ember.String.dasherize(id);
 
     let factory = Ember.getOwner(this)._lookupFactory(`3d:${id}`);
 

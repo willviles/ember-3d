@@ -44,10 +44,10 @@ app/
 
 ### Components
 
-To add a 3D scene to a template, use the `3d-scene` component with a camelized version of the scene id:
+To add a 3D scene to a template, use the `3d-scene` component with a dasherized version of the scene id:
 
 ```handlebars
-{{3d-scene id="sceneId"}}
+{{3d-scene id="scene-id"}}
 ```
 
 ### Scenes
