@@ -23,20 +23,32 @@ export default BaseObjectMixin.extend({
 
   },
 
-  addToGroup(objects) {
-    objects.forEach((object) => {
-      let group = get(this, 'group');
-      
-      if (isArray(object)) {
-        object.forEach((_object) => {
-          group.add(_object);
+  addToGroup() {
+
+    let args = Array.prototype.slice.call(arguments);
+    let group = get(this, 'group');
+
+    args.forEach((arg) => {
+
+      if (isArray(arg)) {
+        arg.forEach((object) => {
+
+          if (isArray(object)) {
+            object.forEach((_object) => {
+              group.add(_object);
+            });
+
+          } else {
+            group.add(object);
+
+          }
+
         });
 
       } else {
-        group.add(object);
+        group.add(arg);
 
       }
-
     });
 
   }
