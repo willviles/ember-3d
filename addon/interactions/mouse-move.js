@@ -12,7 +12,7 @@ export default BaseInteractionMixin.extend({
 
   init() {
 
-    Ember.$(document)[0].addEventListener('mousemove', this.handleMouseMove.bind(this), false);
+    get(this, 'container.element').addEventListener('mousemove', this.handleMouseMove.bind(this), false);
 
     this.setMouseValues({
       mouseX: 0, mouseY: 0
