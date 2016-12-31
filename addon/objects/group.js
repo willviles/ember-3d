@@ -2,7 +2,7 @@ import Ember from 'ember';
 import BaseObjectMixin from 'ember-3d/objects/base';
 import { Group } from 'three';
 
-const { assert, computed, get, set } = Ember;
+const { assert, computed, get, isArray, set } = Ember;
 
 export default BaseObjectMixin.extend({
 
@@ -25,7 +25,18 @@ export default BaseObjectMixin.extend({
 
   addToGroup(objects) {
     objects.forEach((object) => {
-      get(this, 'group').add(object);
+      let group = get(this, 'group');
+      
+      if (isArray(object)) {
+        object.forEach((_object) => {
+          group.add(_object);
+        });
+
+      } else {
+        group.add(object);
+
+      }
+
     });
 
   }
