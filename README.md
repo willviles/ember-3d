@@ -236,6 +236,12 @@ export default MouseMoveInteractionMixin.extend({
 
 More interactions will be added in the near future.
 
+## Plugins
+
+Ember 3D offers plugins for any features not included in the Three.js core module.
+
+* Orbit Controls [ember-3d-orbit-controls](https://github.com/willviles/ember-3d-orbit-controls) by [@willviles](https://github.com/willviles)
+
 ## Using Three.js
 
 For more information on how to use Three.js, please refer to the [documentation](https://threejs.org/docs/).
