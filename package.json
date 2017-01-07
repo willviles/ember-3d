@@ -1,6 +1,6 @@
 {
   "name": "ember-3d",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Fast & organized 3D WebGL scene creation in Ember CLI using Three.js.",
   "keywords": [
     "ember-addon",
