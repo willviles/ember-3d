@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { assert, computed, computed: { reads }, get, isEqual, on, run, set, setProperties } = Ember;
+const { assert, computed, computed: { reads }, get, isEqual, on, run, set, setProperties, typeOf } = Ember;
 
 export default Ember.Component.extend({
 
@@ -52,23 +52,9 @@ export default Ember.Component.extend({
     // Append the scene
     scene.instance.appendScene(element);
 
-    // Instantiate Interactions
-    get(this, 'config.interactions').forEach((object) => {
-      get(object, 'export').create({
-        container: this,
-        sceneId: object.scene
-      });
-
-    });
-
-    // Instantiate Objects
-    get(this, 'config.objects').forEach((object) => {
-      get(object, 'export').create({
-        container: this,
-        sceneId: object.scene
-      });
-
-    });
+    // Instantiate interactions & objects
+    this.instantiate('interactions');
+    this.instantiate('objects');
 
     // Render the scene
     scene.instance.renderScene();
@@ -176,5 +162,21 @@ export default Ember.Component.extend({
     });
 
   }),
+
+  // @function instantiate
+  //
+  // Setup objects.
+
+  instantiate(type) {
+    get(this, `config.${type}`).forEach((object) => {
+      let module = get(object, 'export');
+      if (typeOf(module) !== 'class') { return; }
+      module.create({
+        container: this,
+        sceneId: object.scene
+      });
+
+    });
+  }
 
 });
