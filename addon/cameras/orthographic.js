@@ -16,12 +16,12 @@ export default BaseCameraMixin.extend({
     z: 1000
   },
 
-  frustrums: computed('width', 'height', function() {
+  frustums: computed('width', 'height', function() {
     const { width, height } = getProperties(this, 'width', 'height');
 
     if (isEmpty(width) || isEmpty(height)) { return; }
 
-    // Set frustrums
+    // Set frustums
     return Ember.Object.create({
       left: width / -2,
       right: width / 2,
@@ -37,13 +37,13 @@ export default BaseCameraMixin.extend({
 
   setCamera() {
     const {
-      frustrums,
+      frustums,
       far,
       near
-    } = getProperties(this, 'frustrums', 'far', 'near');
+    } = getProperties(this, 'frustums', 'far', 'near');
 
     let camera = new OrthographicCamera(
-      frustrums.left, frustrums.right, frustrums.top, frustrums.bottom, near, far
+      frustums.left, frustums.right, frustums.top, frustums.bottom, near, far
     );
 
     set(this, 'camera', camera);
@@ -65,18 +65,18 @@ export default BaseCameraMixin.extend({
 
   },
 
-  // @observer frustrumsChanged
+  // @observer frustumsChanged
   //
   // Updates Three.js camera when the aspect is changed.
 
-  frustrumsChanged: observer('frustrums', function() {
+  frustumsChanged: observer('frustums', function() {
 
-    let { camera, frustrums } = getProperties(this, 'camera', 'frustrums');
+    let { camera, frustums } = getProperties(this, 'camera', 'frustums');
 
     if (isEmpty(camera)) { return; }
 
-    Object.keys(get(this, 'frustrums')).forEach((key) => {
-      camera[key] = frustrums[key];
+    Object.keys(get(this, 'frustums')).forEach((key) => {
+      camera[key] = frustums[key];
     });
 
     camera.updateProjectionMatrix();

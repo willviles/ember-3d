@@ -102,7 +102,7 @@ export default PerspectiveCameraMixin.extend({
 
 ### Orthographic Camera
 
-The [OrthographicCameraMixin](https://github.com/willviles/ember-3d/blob/master/addon/cameras/orthographic.js) creates a Three.js `OrthographicCamera`. Left, right, top and bottom frustrums are dynamically updated when the `3d-scene` dimensions change.
+The [OrthographicCameraMixin](https://github.com/willviles/ember-3d/blob/master/addon/cameras/orthographic.js) creates a Three.js `OrthographicCamera`. Left, right, top and bottom frustums are dynamically updated when the `3d-scene` dimensions change.
 
 ```javascript
 // app/scene-id/camera.js
