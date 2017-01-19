@@ -4,7 +4,7 @@ Ember 3D is an Ember addon for using [Three.js](https://github.com/mrdoob/three.
 
 It is designed to:
 * Prescribe a solid file structure to Three.js code using ES6 modules.
-* Enable fast creation of Three.js [scenes](#scenes), [renderers](#renderers), [cameras](#cameras), [lighting](#lighting) and [objects](#objects).
+* Enable fast creation of Three.js [scenes](#scenes), [renderers](#renderers), [cameras](#cameras), [lighting](#lighting) and [objects](#objects) using a well defined set of abstractions.
 
 ## Installation
 
