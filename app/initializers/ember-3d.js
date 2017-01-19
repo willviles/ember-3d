@@ -36,9 +36,10 @@ export function initialize(application) {
 
   });
 
-  factoryRegistrations.mapBy('scene').uniq().forEach((scene) => {
+  factoryRegistrations.uniqBy('scene').forEach((_scene) => {
 
-    let injection = Ember.Object.create({});
+    let { scene } = _scene,
+        injection = Ember.Object.create({});
 
     factoryRegistrations.filterBy('scene', scene).forEach((factoryRegistration) => {
 
