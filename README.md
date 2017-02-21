@@ -1,4 +1,5 @@
-# Ember 3D
+Ember 3D [![npm](https://img.shields.io/npm/v/ember-3d.svg)](https://www.npmjs.com/package/ember-3d)
+======
 
 Ember 3D is an Ember addon for using [Three.js](https://github.com/mrdoob/three.js) - an easy to use, lightweight, javascript 3D library.
 
