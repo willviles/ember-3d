@@ -23,6 +23,10 @@ import { BoxGeometry, Mesh, MeshPhongMaterial, Scene } from 'three';
 
 The shim uses `app.import`'s new [AMD transformation](https://github.com/ember-cli/ember-cli/pull/5976) feature released in Ember CLI [2.9.0](https://github.com/ember-cli/ember-cli/blob/master/CHANGELOG.md#290).
 
+**Ember.js >=2.7.0**
+
+Due to the use of the `uniqBy` method, this lib needs ember.js 2.7.0 or upwards.
+
 ## Folder structure
 
 Ember 3D adds a folder named `3d` to your project's `app` folder. Ember 3D expects projects to be structured in the following manner:
