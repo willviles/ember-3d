@@ -72,7 +72,7 @@ export default Ember.Component.extend({
 
     id = Ember.String.dasherize(id);
 
-    let factory = Ember.getOwner(this)._lookupFactory(`3d:${id}`);
+    let factory = Ember.getOwner(this).resolveRegistration(`3d:${id}`);
 
     this.instantiateFactoryObjects(factory);
 
