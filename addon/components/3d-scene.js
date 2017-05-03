@@ -168,7 +168,14 @@ export default Ember.Component.extend({
   // Setup objects.
 
   instantiate(type) {
-    get(this, `config.${type}`).forEach((object) => {
+    let typeArr = get(this, `config.${type}`);
+
+    if (!typeArr || !(Array.isArray(typeArr))) {
+      console.info(`No instantiate of "${type}", due to not added objects of this type`);
+      return;
+    }
+
+    typeArr.forEach((object) => {
       let module = get(object, 'export');
       if (typeOf(module) !== 'class') { return; }
       module.create({
